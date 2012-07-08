@@ -10,9 +10,15 @@
   "dependencies": {
     "uijs": "0.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "cantest": "0.0.2",
+    "canvas": "0.12.1"
+  },
   "optionalDependencies": {},
   "engines": {
     "node": "*"
+  },
+  "scripts": {
+    "test": "cd test && ./run.sh"
   }
 }
