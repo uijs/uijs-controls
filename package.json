@@ -1,0 +1,18 @@
+{
+  "author": "Ram Greenberg <ramgreenberg@hotmail.com>",
+  "name": "uijs-controls",
+  "description": "Control toolkit for uijs",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/eladb/uijs-controls.git"
+  },
+  "dependencies": {
+    "uijs": "0.0.1"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
