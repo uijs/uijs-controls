@@ -31,19 +31,19 @@ attribute.
 
  Examples:
 
- image({
-  image: uijs.util.loadimage('ImagePath.jpg'),
-  stretchWidth:uijs.util.constant('false'),
-  stretchHeight:uijs.util.constant('false'),
-  fit:uijs.util.constant('false'),
-  horizontalAlign:uijs.util.constant('center'),
-  verticalAlign:uijs.util.constant('middle'),
- })
+	image({
+		image: uijs.util.loadimage('ImagePath.jpg'),
+		stretchWidth: uijs.util.constant('false'),
+		stretchHeight: uijs.util.constant('false'),
+		fit: uijs.util.constant('false'),
+		horizontalAlign: uijs.util.constant('center'),
+		verticalAlign: uijs.util.constant('middle'),
+	})
 
- 	box size - 100,100
- 	image size - 50,50
+    box size - 100,100
+    image size - 50,50
 
- 	+---------------------------+
+    +---------------------------+
 	|                           |
 	|           25px            |
 	|      +-------------+      |

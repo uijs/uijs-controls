@@ -1,8 +1,9 @@
 var uijs = require('uijs');
+
+
 var box = uijs.box;
 var util = uijs.util;
 var positioning = uijs.positioning;
-var constant = uijs.util.constant;
 var controls = require('..');
 var image = controls.image;
 
@@ -11,20 +12,20 @@ var html = uijs.html;
 var app = box();
 app.ondraw = function(ctx) {
        ctx.fillStyle = 'gray';
-       ctx.fillRect(0, 0, this.width(), this.height());
+       ctx.fillRect(0, 0, this.width, this.height);
    }
 
 var left = html({
-	x:constant(0),
-	y:function(){return this.parent.height()/2 - 100;},
-	width:function(){return this.parent.width()/4;},
-	height:function(){return this.parent.height();},
+	x:0,
+	y:function(){return this.parent.height/2 - 100;},
+	width:function(){return this.parent.width/4;},
+	height:function(){return this.parent.height;},
 	onload: function(container) {
 	    container.innerHTML += [
 	    	'<form style="border:5px solid black;">',
 	    	'Enter image path <input type="text" id="image" size="26" value="C:\\Users\\Public\\Pictures\\Sample Pictures\\koala.jpg"> <br />',
-	    	'Enter image box width  <input type="text" size="10" id="boxWidth" value="'+3/4 * this.parent.width()+'"> <br />',
-	    	'Enter image box height <input type="text" size="10" id="boxHeight" value="'+this.parent.height()+'"> <br />',
+	    	'Enter image box width  <input type="text" size="10" id="boxWidth" value="'+3/4 * this.parent.width+'"> <br />',
+	    	'Enter image box height <input type="text" size="10" id="boxHeight" value="'+this.parent.height+'"> <br />',
 			'<input type="checkbox" id="stretchWidth" value="StretchWidth" />Stretch Width <br />',
 			'<input type="checkbox" id="stretchHeight" value="StretchHeight" />Stretch Height  <br />',
 		    '<input type="checkbox" id="fit" value="Fit" /> Fit <br />',
@@ -45,7 +46,7 @@ var left = html({
 
 var right = image({
   x:positioning.prev.right(),
-  y:constant(0),
+  y:0,
   width:function(){
   	var bw = document.getElementById('boxWidth');
   	if (!bw) { return 3/4 * this.parent.width(); }
@@ -97,7 +98,15 @@ var right = image({
 
 	return vsel.options[vsel.selectedIndex].value;
   },
-})
+});
+
+var base_ondraw = right.ondraw;
+right.ondraw = function(ctx) {
+  ctx.strokeStyle = 'black';
+  ctx.lineWidth = 5;
+  ctx.strokeRect(0, 0, this.width, this.height);
+  base_ondraw.call(this, ctx);
+};
 
 app.add(left);
 app.add(right);
