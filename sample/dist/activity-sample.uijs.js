@@ -436,12 +436,12 @@ module.exports = function(options) {
 
   window.devicePixelRatio || (window.devicePixelRatio = 1);
 
-  // //TODO: Added 4 lines below for debugging - remove when done
+  //TODO: Added 4 lines below for debugging - remove when done
   //TODO: please do not submit this hunk uncommented because tests fail
-  // window.requestAnimationFrame = function(cb) { setTimeout(cb, 1); }
-  // alert('Original pixel ratio: ' + window.devicePixelRatio);
-  // window.devicePixelRatio = 2;
-  // alert('Pixel ratio: ' + window.devicePixelRatio);
+  window.requestAnimationFrame = function(cb) { setTimeout(cb, 1); }
+  alert('Original pixel ratio: ' + window.devicePixelRatio);
+  window.devicePixelRatio = 2;
+  alert('Pixel ratio: ' + window.devicePixelRatio);
 
   var canvas = null;
 
@@ -575,6 +575,7 @@ module.exports = function(options) {
     // emit fps every ~1sec
     if (delta >= 1000) {
       main.emit('fps', (fps / (delta / 1000)));
+      console.log('fps: ', (fps / (delta / 1000)));
       fps = 0;
       fps_start_time = now;
     };
@@ -1357,7 +1358,12 @@ function addWatch(obj){
   obj.$watch = new EventEmitter();
   obj.watch = function(prop, cb) {
     var curr = obj[prop];
-    bind(obj, prop, function() { return curr; }, false);
+    
+    // Only bind if 'prop' is not yet bounded
+    if(!obj.$boundedVars || !obj.$boundedVars[prop]) {
+      bind(obj, prop, function() { return curr; }, false);
+    }
+    
     cb.call(obj, curr, false);
     return this.$watch.on(prop, cb);
   };
@@ -1379,10 +1385,16 @@ function bind(obj, prop, getter, emit) {
   // add `watch` capability to object.
   addWatch(obj);
 
+  // add indication the 'prop' is bounded
+  if(!obj.$boundedVars) {
+    obj.$boundedVars = {};
+  }
+  obj.$boundedVars[prop] = true;
+
   getter = getter || function() { return undefined; };
 
   function setter(newval) {
-    if (newval && newval.$bind) {
+    if (newval && newval.$bind) {  //TODO: When does newval has $bind on it. Is it because we bind below and the return the binding promise and we dont want to rebind?
       bind(obj, prop, newval.$bind);
       return newval;
     }
@@ -1423,7 +1435,7 @@ function autobind(obj) {
     }
   });
 
-  // add `watch` capability to object.
+  // add `watch` capability to object. Needed if none of the keys $bind set
   addWatch(obj);
   return obj;
 }
@@ -2152,11 +2164,11 @@ module.exports = function(options) {
     shadow: null,
     center: false,
     height: options.size ? options.size + 20/100 * options.size : 20,
-    border: function(ctx) {
+    renderBorder: function(ctx) {
       ctx.strokeStyle = 'yellow';
       ctx.strokeRect(0, 0, this.width, this.height);
     },
-    shadow: function(ctx){
+    renderShadow: function(ctx){
       ctx.shadowBlur = 2;
       ctx.shadowColor = 'black';
       ctx.shadowOffsetX = 2;
@@ -2174,8 +2186,7 @@ module.exports = function(options) {
 
     if (!text) return;
 
-    var border = self.border;
-    if(border) { border(ctx);}
+    if(self.border) { self.renderBorder(ctx);}
     
     ctx.fillStyle = self.color;
     
@@ -2219,8 +2230,7 @@ module.exports = function(options) {
       self.yPosCache = 0;//h / 2 - size / 2 + size - 20/100 * size;
     }
 
-    var shadow = self.shadow;
-    if(shadow) {shadow(ctx);}
+    if(self.shadow) {self.renderShadow(ctx);}
     renderLabel(ctx, text, self.xPosCache, self.yPosCache);
   }
 
@@ -2409,7 +2419,7 @@ module.exports = function(options) {
 
 });
 
-require.define("/sample/.tmp.61168.entry.activity-sample.js",function(require,module,exports,__dirname,__filename,process){window.require = require;
+require.define("/sample/.tmp.51288.entry.activity-sample.js",function(require,module,exports,__dirname,__filename,process){window.require = require;
 
 // lazy require so that app code will not execute before onload
 Object.defineProperty(window, 'main', {
@@ -2417,5 +2427,5 @@ Object.defineProperty(window, 'main', {
     return require('./activity-sample.js');
   }
 });});
-require("/sample/.tmp.61168.entry.activity-sample.js");
+require("/sample/.tmp.51288.entry.activity-sample.js");
 })();
