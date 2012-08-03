@@ -10,9 +10,9 @@ var html = uijs.html;
 
 var app = box();
 app.ondraw = function(ctx) {
-       ctx.fillStyle = 'black';
-       ctx.fillRect(0, 0, this.width, this.height);
-   }
+  ctx.fillStyle = 'black';
+  ctx.fillRect(0, 0, this.width, this.height);
+}
 
 app.add(activity({
   x: 0,
@@ -21,8 +21,6 @@ app.add(activity({
   height: 100,
   lineType: 'dot',
   animating: true,
-  }));
-
-
+}));
 
 module.exports = app;
