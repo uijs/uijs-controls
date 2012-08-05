@@ -5,6 +5,7 @@ var util = uijs.util;
 var positioning = uijs.positioning;
 var controls = require('..');
 var activity = controls.activity;
+var bind = uijs.bind;
 
 var html = uijs.html;
 
@@ -14,13 +15,13 @@ app.ondraw = function(ctx) {
   ctx.fillRect(0, 0, this.width, this.height);
 }
 
-app.add(activity({
+var start = Date.now();
+app.add(activity.line({
   x: 0,
   y: 0,
-  width: 200,
+  width: 50,
   height: 100,
-  lineType: 'dot',
-  animating: true,
+  animating: bind(app, 'animating', function () { return Date.now() - start < 2000 || Date.now() - start > 5000; }),
 }));
 
 module.exports = app;
