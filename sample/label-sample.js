@@ -40,7 +40,7 @@ var left = html({
 		  	'Box width  <input type="text" size="10" id="boxWidth" value="'+3/4 * this.parent.width+'"> <br />',
 	    	'Box height <input type="text" size="10" id="boxHeight" value="'+this.parent.height+'"> <br />',
 		  	'text size <input type="text" id="size" size="26" value="100"> <br />',
-		  	'<input type="checkbox" id="adjustsFontSizeToFitWidth" value="adjustsFontSizeToFitWidth" />Adjusts font size to fit width  <br />',
+        'Adjusts font size to fit width <input type="text" id="adjustsFontSizeToFitWidth" size="26" value="false"> <br />',
 		    '<input type="checkbox" id="adjustsBoxSizeToFitFontSize" value="adjustsBoxSizeToFitFontSize" />Adjusts box size to fit font size <br />',
 		    '<br />Highlight Properties <br /><br />' +
 		  	'<input type="checkbox" id="highlighted" value="highlighted" />Highlighted <br />',
@@ -113,10 +113,22 @@ var right = label({
 
 var base_ondraw = right.ondraw;
 right.ondraw = function(ctx) {
+  var adjustsFontSizeToFitWidth = document.getElementById('adjustsFontSizeToFitWidth').value;
+  if(adjustsFontSizeToFitWidth === 'true'){
+    this.adjustsFontSizeToFitWidth = true;  
+  }
+  else{
+    if(!isNaN(adjustsFontSizeToFitWidth)){
+      this.adjustsFontSizeToFitWidth = parseInt(adjustsFontSizeToFitWidth);
+    }
+    else{
+       this.adjustsFontSizeToFitWidth = false;
+    }
+  }
+  
+
   if (!this.adjustsBoxSizeToFitFontSize) { this.width = parseInt(document.getElementById('boxWidth').value); }
   if (!this.adjustsBoxSizeToFitFontSize) { this.height = parseInt(document.getElementById('boxHeight').value); }
-  var adjustsFontSizeToFitWidth = document.getElementById('adjustsFontSizeToFitWidth');
-  this.adjustsFontSizeToFitWidth = (!adjustsFontSizeToFitWidth) ? false : adjustsFontSizeToFitWidth.checked;
   this.size = (adjustsFontSizeToFitWidth.checked) ? this.size : parseInt(document.getElementById('size').value);
   ctx.fillStyle = 'green';
   ctx.fillRect(0, 0, this.width, this.height);
