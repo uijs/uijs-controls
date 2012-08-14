@@ -40,7 +40,9 @@ var left = html({
 		  	'Box width  <input type="text" size="10" id="boxWidth" value="'+3/4 * this.parent.width+'"> <br />',
 	    	'Box height <input type="text" size="10" id="boxHeight" value="'+this.parent.height+'"> <br />',
 		  	'text size <input type="text" id="size" size="26" value="100"> <br />',
-        'Adjusts font size to fit width <input type="text" id="adjustsFontSizeToFitWidth" size="26" value="false"> <br />',
+        'fit min size <input type="text" id="fitMinSize" size="26" value="0"> <br />',
+        'fit max size <input type="text" id="fitMaxSize" size="26" value="10000"> <br />',
+        '<input type="checkbox" id="adjustsFontSizeToFitWidth" value="adjustsFontSizeToFitWidth" />Adjusts font size to fit width  <br />',
 		    '<input type="checkbox" id="adjustsBoxSizeToFitFontSize" value="adjustsBoxSizeToFitFontSize" />Adjusts box size to fit font size <br />',
 		    '<br />Highlight Properties <br /><br />' +
 		  	'<input type="checkbox" id="highlighted" value="highlighted" />Highlighted <br />',
@@ -71,6 +73,15 @@ var right = label({
   	var bold = document.getElementById('bold');
   	if (!bold) { return false; }
   	return bold.checked;
+  }),
+  fitMaxSize: bind(right, 'fitMaxSize', function(){
+    return parseInt(document.getElementById('fitMaxSize').value);
+  }),
+  fitMinSize: bind(right, 'fitMinSize', function(){
+    return parseInt(document.getElementById('fitMinSize').value);
+  }),
+  shadowOffsetX: bind(right, 'shadowOffsetX', function(){
+    return parseInt(document.getElementById('shadowOffsetX').value);
   }),
   align: bind(right, 'align', function() {
 	  var hsel = document.getElementById('align');
@@ -113,19 +124,8 @@ var right = label({
 
 var base_ondraw = right.ondraw;
 right.ondraw = function(ctx) {
-  var adjustsFontSizeToFitWidth = document.getElementById('adjustsFontSizeToFitWidth').value;
-  if(adjustsFontSizeToFitWidth === 'true'){
-    this.adjustsFontSizeToFitWidth = true;  
-  }
-  else{
-    if(!isNaN(adjustsFontSizeToFitWidth)){
-      this.adjustsFontSizeToFitWidth = parseInt(adjustsFontSizeToFitWidth);
-    }
-    else{
-       this.adjustsFontSizeToFitWidth = false;
-    }
-  }
-  
+  var adjustsFontSizeToFitWidth = document.getElementById('adjustsFontSizeToFitWidth');   
+  this.adjustsFontSizeToFitWidth = (!adjustsFontSizeToFitWidth) ? false : adjustsFontSizeToFitWidth.checked;
 
   if (!this.adjustsBoxSizeToFitFontSize) { this.width = parseInt(document.getElementById('boxWidth').value); }
   if (!this.adjustsBoxSizeToFitFontSize) { this.height = parseInt(document.getElementById('boxHeight').value); }
