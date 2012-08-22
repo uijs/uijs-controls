@@ -17,13 +17,13 @@ app.ondraw = function(ctx) {
 
 var left = html({
 	x:0,
-	y: bind(left, 'y', function(){return this.parent.height/2 - 100;}),
-	width: bind(left, 'width', function(){return this.parent.width/4;}),
-	height: bind(left, 'height', function(){return this.parent.height;}),
+	y: bind(function() { return this.parent && this.parent.height/2 - 100; }),
+	width: bind(function() { return this.parent && this.parent.width/4; } ),
+	height: bind(function() { return this.parent && this.parent.height; }),
 	onload: function(container) {
 	    container.innerHTML += [
 	    	'<form style="border:5px solid black;">',
-	    	'Enter image path <input type="text" id="image" size="26" value="C:\\Users\\Public\\Pictures\\Sample Pictures\\koala.jpg"> <br />',
+	    	'Enter image path <input type="text" id="image" size="26" value="http://www.ynet.co.il/PicServer2/04062007/1163265/D485-119_wa.jpg"> <br />',
 	    	'Enter image box width  <input type="text" size="10" id="boxWidth" value="'+3/4 * this.parent.width+'"> <br />',
 	    	'Enter image box height <input type="text" size="10" id="boxHeight" value="'+this.parent.height+'"> <br />',
 			'<input type="checkbox" id="stretchWidth" value="StretchWidth" />Stretch Width <br />',
@@ -45,21 +45,21 @@ var left = html({
   })
 
 var right = image({
-  x: bind(right, 'x', positioning.prev.right()),
-  y:0,
-  width: bind(right, 'width', function(){
+  x: bind(positioning.prev.right()),
+  y: 0,
+  width: bind(function() {
   	var bw = document.getElementById('boxWidth');
   	if (!bw) { return 3/4 * this.parent.width(); }
 
   	return bw.value;
   }),
-  height: bind(right, 'height', function(){
+  height: bind(function() {
   	var bh = document.getElementById('boxHeight');
   	if (!bh) { return this.parent.height(); }
 
   	return bh.value;
   }),
-  image: bind(right, 'image', function() {
+  image: bind(function() {
   	var imgElement = document.getElementById('image');
   	if (imgElement.value !== '') { src = imgElement.value; }
 
@@ -69,30 +69,30 @@ var right = image({
 
   	return img;
   }),
-  stretchWidth: bind(right, 'stretchWidth', function(){
+  stretchWidth: bind(function() {
   	var sw = document.getElementById('stretchWidth');
   	if (!sw) { return false; }
 
   	return sw.checked;
   }),
-  stretchHeight: bind(right, 'stretchHeight', function(){
+  stretchHeight: bind(function() {
   	var sh = document.getElementById('stretchHeight');
   	if (!sh) { return false; }
   	return sh.checked;
   }),
-  fit: bind(right, 'fit', function(){
+  fit: bind(function() {
   	var f = document.getElementById('fit');
   	if (!f) { return false; }
 
   	return f.checked;
   }),
-  horizontalAlign: bind(right, 'horizontalAlign', function() {
+  horizontalAlign: bind(function() {
 	  var hsel = document.getElementById('horizontalAlign');
 	  if (!hsel) return 'center';
 
 	  return hsel.options[hsel.selectedIndex].value;
   }),
-  verticalAlign: bind(right, 'verticalAlign', function() {
+  verticalAlign: bind(function() {
 	 var vsel = document.getElementById('verticalAlign');
 	  if (!vsel) return 'middle';
 

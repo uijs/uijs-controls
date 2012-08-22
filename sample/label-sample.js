@@ -16,124 +16,99 @@ app.ondraw = function(ctx) {
 var left = html({
 	x:0,
 	y: 0,
-	width: bind(left, 'width', function(){return this.parent.width/4;}),
-	height: bind(left, 'height', function(){return this.parent.height;}),
+	width: bind(function() { return this.parent && this.parent.width / 4; }),
+	height: bind(function() { return this.parent && this.parent.height; }),
 	onload: function(container) {
-	    container.innerHTML += [
-	    	'<form style="border:5px solid black;">',
-	    	'Text Properties <br /><br />' +
-	    	'Label text <input type="text" id="lablText" size="26" value="Hello Word!"> <br />',
-	    	'Label font family <input type="text" id="lablFont" size="26" value="Helvetica"> <br />',
-	    	'Text color <input type="text" id="textColor" size="26" value="black"> <br />',
-			'<input type="checkbox" id="bold" value="bold" />Bold <br />',
-			'Align <select id="align" >',
-		    '<option>center</option>',
-		  	'<option>right</option>',
-		  	'<option>left</option>',
-		  	'</select>  <br />',
-		  	'VerticalAlign <select id="verticalAlign">',
-		    '<option>middle</option>',
-		  	'<option>bottom</option>',
-		  	'<option>top</option>',
-		  	'</select> <br />',
-		  	'<br />Sizing Properties <br /><br />' +
-		  	'Box width  <input type="text" size="10" id="boxWidth" value="'+3/4 * this.parent.width+'"> <br />',
-	    	'Box height <input type="text" size="10" id="boxHeight" value="'+this.parent.height+'"> <br />',
-		  	'text size <input type="text" id="size" size="26" value="100"> <br />',
-        'fit min size <input type="text" id="fitMinSize" size="26" value="0"> <br />',
-        'fit max size <input type="text" id="fitMaxSize" size="26" value="10000"> <br />',
-        '<input type="checkbox" id="adjustsFontSizeToFitWidth" value="adjustsFontSizeToFitWidth" />Adjusts font size to fit width  <br />',
-		    '<input type="checkbox" id="adjustsBoxSizeToFitFontSize" value="adjustsBoxSizeToFitFontSize" />Adjusts box size to fit font size <br />',
-		    '<br />Highlight Properties <br /><br />' +
-		  	'<input type="checkbox" id="highlighted" value="highlighted" />Highlighted <br />',
-		  	'Highlighted text color <input type="text" id="highlightedTextColor" size="26" value="gray"> <br />',
-		  	'<br />Shadow Properties <br /><br />' +
-		  	'Shadow Color <input type="text" id="shadowColor" size="26" value="null"> <br />',
-		  	'Shadow offset X <input type="text" id="shadowOffsetX" size="26" value="0"> <br />',
-		  	'Shadow offset Y <input type="text" id="shadowOffsetY" size="26" value="-1"> <br />',
-		  	'shadow blur <input type="text" id="shadowBlur" size="26" value="1"> <br />',
-		    '</form>',
+	  container.innerHTML += [
+    	'<form style="border:5px solid black;">',
+    	'Text Properties <br /><br />' +
+    	'Label text <input type="text" id="lablText" size="26" value="Hello Word!"> <br />',
+    	'Label font family <input type="text" id="lablFont" size="26" value="Helvetica"> <br />',
+    	'Text color <input type="text" id="textColor" size="26" value="black"> <br />',
+		'<input type="checkbox" id="bold" value="bold" />Bold <br />',
+		'Align <select id="align" >',
+	    '<option>center</option>',
+	  	'<option>right</option>',
+	  	'<option>left</option>',
+	  	'</select>  <br />',
+	  	'VerticalAlign <select id="verticalAlign">',
+	    '<option>middle</option>',
+	  	'<option>bottom</option>',
+	  	'<option>top</option>',
+	  	'</select> <br />',
+	  	'<br />Sizing Properties <br /><br />' +
+	  	'Box width  <input type="text" size="10" id="boxWidth" value="'+3/4 * this.parent.width+'"> <br />',
+    	'Box height <input type="text" size="10" id="boxHeight" value="'+this.parent.height+'"> <br />',
+	  	'text size <input type="text" id="size" size="26" value="100"> <br />',
+      'fit min size <input type="text" id="fitMinSize" size="26" value="0"> <br />',
+      'fit max size <input type="text" id="fitMaxSize" size="26" value="10000"> <br />',
+      '<input type="checkbox" id="adjustsFontSizeToFitWidth" value="adjustsFontSizeToFitWidth" />Adjusts font size to fit width  <br />',
+	    '<input type="checkbox" id="adjustsBoxSizeToFitFontSize" value="adjustsBoxSizeToFitFontSize" />Adjusts box size to fit font size <br />',
+	    '<br />Highlight Properties <br /><br />' +
+	  	'<input type="checkbox" id="highlighted" value="highlighted" />Highlighted <br />',
+	  	'Highlighted text color <input type="text" id="highlightedTextColor" size="26" value="gray"> <br />',
+	  	'<br />Shadow Properties <br /><br />' +
+	  	'Shadow Color <input type="text" id="shadowColor" size="26" value="null"> <br />',
+	  	'Shadow offset X <input type="text" id="shadowOffsetX" size="26" value="0"> <br />',
+	  	'Shadow offset Y <input type="text" id="shadowOffsetY" size="26" value="-1"> <br />',
+	  	'shadow blur <input type="text" id="shadowBlur" size="26" value="1"> <br />',
+	    '</form>',
 	    ].join('\n');
     },
   })
 
 var right = label({
-  x: bind(right, 'x', positioning.prev.right()),
-  y:0,
-  text: bind(right, 'text', function() {
-  	return document.getElementById('lablText').value;
-  }),
-  font: bind(right, 'font', function(){
-  	return document.getElementById('lablFont').value;
-  }),
-  color: bind(right, 'color', function(){
-  	return document.getElementById('textColor').value;
-  }),
-  bold: bind(right, 'bold', function(){
-  	var bold = document.getElementById('bold');
+  x: bind(positioning.prev.right()),
+  y: 0,
+  text: bind(function() { return document.getElementById('lablText').value; }),
+  font: bind(function() { return document.getElementById('lablFont').value; }),
+  color: bind(function() { return document.getElementById('textColor').value; }),
+  bold: bind(function() { 
+    var bold = document.getElementById('bold');
   	if (!bold) { return false; }
   	return bold.checked;
   }),
-  fitMaxSize: bind(right, 'fitMaxSize', function(){
-    return parseInt(document.getElementById('fitMaxSize').value);
-  }),
-  fitMinSize: bind(right, 'fitMinSize', function(){
-    return parseInt(document.getElementById('fitMinSize').value);
-  }),
-  shadowOffsetX: bind(right, 'shadowOffsetX', function(){
-    return parseInt(document.getElementById('shadowOffsetX').value);
-  }),
-  align: bind(right, 'align', function() {
-	  var hsel = document.getElementById('align');
+  fitMaxSize: bind(function() { return parseInt(document.getElementById('fitMaxSize').value); }),
+  fitMinSize: bind(function() { return parseInt(document.getElementById('fitMinSize').value); }),
+  shadowOffsetX: bind(function() { return parseInt(document.getElementById('shadowOffsetX').value); }),
+  align: bind(function() { 
+    var hsel = document.getElementById('align');
 	  if (!hsel) return 'center';
-
 	  return hsel.options[hsel.selectedIndex].value;
   }),
-  verticalAlign: bind(right, 'verticalAlign', function() {
+  verticalAlign: bind(function() {
 	 var vsel = document.getElementById('verticalAlign');
 	  if (!vsel) return 'middle';
-
 	  return vsel.options[vsel.selectedIndex].value;
   }),
-  adjustsBoxSizeToFitFontSize: bind(right, 'adjustsBoxSizeToFitFontSize', function(){
+  adjustsBoxSizeToFitFontSize: bind(function() {
   	var adjustsBoxSizeToFitFontSize = document.getElementById('adjustsBoxSizeToFitFontSize');
   	if (!adjustsBoxSizeToFitFontSize) { return false; }
   	return adjustsBoxSizeToFitFontSize.checked;
   }),
-  highlighted: bind(right, 'highlighted', function(){
+  highlighted: bind(function(){
   	var highlighted = document.getElementById('highlighted');
   	if (!highlighted) { return false; }
   	return highlighted.checked;
   }),
-  highlightedTextColor: bind(right, 'highlightedTextColor', function(){
-  	return document.getElementById('highlightedTextColor').value;
-  }),
-  shadowColor: bind(right, 'shadowColor', function(){
-  	return document.getElementById('shadowColor').value;
-  }),
-  shadowOffsetX: bind(right, 'shadowOffsetX', function(){
-  	return parseInt(document.getElementById('shadowOffsetX').value);
-  }),
-  shadowOffsetY: bind(right, 'shadowOffsetY', function(){
-  	return parseInt(document.getElementById('shadowOffsetY').value);
-  }),
-  shadowBlur: bind(right, 'shadowBlur', function(){
-  	return parseInt(document.getElementById('shadowBlur').value);
-  }),  
+  highlightedTextColor: bind(function(){ return document.getElementById('highlightedTextColor').value; }),
+  shadowColor: bind(function() { return document.getElementById('shadowColor').value; }),
+  shadowOffsetX: bind(function() { return parseInt(document.getElementById('shadowOffsetX').value); }),
+  shadowOffsetY: bind(function() { return parseInt(document.getElementById('shadowOffsetY').value); }),
+  shadowBlur: bind(function() { return parseInt(document.getElementById('shadowBlur').value); }),  
 });
 
-var base_ondraw = right.ondraw;
-right.ondraw = function(ctx) {
-  var adjustsFontSizeToFitWidth = document.getElementById('adjustsFontSizeToFitWidth');   
-  this.adjustsFontSizeToFitWidth = (!adjustsFontSizeToFitWidth) ? false : adjustsFontSizeToFitWidth.checked;
-
-  if (!this.adjustsBoxSizeToFitFontSize) { this.width = parseInt(document.getElementById('boxWidth').value); }
-  if (!this.adjustsBoxSizeToFitFontSize) { this.height = parseInt(document.getElementById('boxHeight').value); }
-  this.size = (adjustsFontSizeToFitWidth.checked) ? this.size : parseInt(document.getElementById('size').value);
-  ctx.fillStyle = 'green';
-  ctx.fillRect(0, 0, this.width, this.height);
-  base_ondraw.call(this, ctx);
-};
+// var base_ondraw = right.ondraw;
+// right.ondraw = function(ctx) {
+//   var adjustsFontSizeToFitWidth = document.getElementById('adjustsFontSizeToFitWidth');   
+//   this.adjustsFontSizeToFitWidth = (!adjustsFontSizeToFitWidth) ? false : adjustsFontSizeToFitWidth.checked;
+//   if (!this.adjustsBoxSizeToFitFontSize) { this.width = parseInt(document.getElementById('boxWidth').value); }
+//   if (!this.adjustsBoxSizeToFitFontSize) { this.height = parseInt(document.getElementById('boxHeight').value); }
+//   this.size = (adjustsFontSizeToFitWidth.checked) ? this.size : parseInt(document.getElementById('size').value);
+//   ctx.fillStyle = 'green';
+//   ctx.fillRect(0, 0, this.width, this.height);
+//   base_ondraw.call(this, ctx);
+// };
 
 app.add(left);
 app.add(right);
