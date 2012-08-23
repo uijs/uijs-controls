@@ -8,7 +8,7 @@ var app = box();
 
 var searchbar = searchBar({
 	width:bind(function(){return app.width; }),
-	height:50,
+	height:40,
 });
 
 app.add(searchbar);
