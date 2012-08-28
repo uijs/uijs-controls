@@ -14,10 +14,17 @@ var textBox = textbox({
 	_id: 'app',
 });
 
-//textBox.ondraw = function(ctx){
-//	ctx.fillStyle = 'blue';
-//  	ctx.fillRect(0, 0, this.width, this.height);
-//}
+textBox.onCalculate = function(){
+
+}
+
+textBox.onSetContext = function(ctx){
+	ctx.fillStyle = 'blue';
+}
+
+textBox.ondraw = function(ctx){
+  	ctx.fillRect(0, 0, this.width, this.height);
+}
 
 app.add(textBox);
 
