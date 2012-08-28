@@ -10,8 +10,14 @@ var bind = uijs.bind;
 var html = uijs.html;
 
 var app = box();
-app.ondraw = function(ctx) {
+app.onCalculate = function (){
+
+}
+
+app.onSetContext = function(ctx){
   ctx.fillStyle = 'gray';
+}
+app.ondraw = function(ctx) {
   ctx.fillRect(0, 0, this.width, this.height);
 }
 

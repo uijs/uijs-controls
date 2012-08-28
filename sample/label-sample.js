@@ -8,8 +8,16 @@ var label = controls.label;
 var bind = uijs.bind;
 
 var app = box();
-app.ondraw = function(ctx) {
+
+app.onCalculate = function (){
+
+}
+
+app.onSetContext = function(ctx){
   ctx.fillStyle = 'gray';
+}
+
+app.ondraw = function(ctx) {
   ctx.fillRect(0, 0, this.width, this.height);
 }
 
@@ -97,18 +105,6 @@ var right = label({
   shadowOffsetY: bind(function() { return parseInt(document.getElementById('shadowOffsetY').value); }),
   shadowBlur: bind(function() { return parseInt(document.getElementById('shadowBlur').value); }),  
 });
-
-// var base_ondraw = right.ondraw;
-// right.ondraw = function(ctx) {
-//   var adjustsFontSizeToFitWidth = document.getElementById('adjustsFontSizeToFitWidth');   
-//   this.adjustsFontSizeToFitWidth = (!adjustsFontSizeToFitWidth) ? false : adjustsFontSizeToFitWidth.checked;
-//   if (!this.adjustsBoxSizeToFitFontSize) { this.width = parseInt(document.getElementById('boxWidth').value); }
-//   if (!this.adjustsBoxSizeToFitFontSize) { this.height = parseInt(document.getElementById('boxHeight').value); }
-//   this.size = (adjustsFontSizeToFitWidth.checked) ? this.size : parseInt(document.getElementById('size').value);
-//   ctx.fillStyle = 'green';
-//   ctx.fillRect(0, 0, this.width, this.height);
-//   base_ondraw.call(this, ctx);
-// };
 
 app.add(left);
 app.add(right);
