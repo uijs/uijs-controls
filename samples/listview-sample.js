@@ -53,7 +53,11 @@ left.on('load',function(){
   document.getElementById('createList').onclick = function(){
     if(app.children.length == 2){
       app.remove(right);
-      //if (right.searchBar) right.searchBar.input.children[1].dispose();
+      //temp until supporting watch on add/remove from children ...
+      if (right.searchBar){
+        var htmlNode = right.searchBar.input.children[1]._div;
+        htmlNode.parentNode.removeChild(htmlNode);  
+      }
     }
     right = listview({
       x: bind(positioning.prev.right()),
