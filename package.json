@@ -1,7 +1,7 @@
 {
-  "author": "Ram Greenberg <ramgreenberg@hotmail.com>",
   "name": "uijs-controls",
-  "description": "Control toolkit for uijs",
+  "author": "Ram Greenberg <ramgreenberg@hotmail.com>",
+  "description": "Basic control toolkit for uijs",
   "version": "0.0.1",
   "contributors": [
     {
